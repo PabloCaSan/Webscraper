@@ -17,6 +17,25 @@ import time
 import re
 from io import BytesIO
 
+if st.session_state['iaItemListWithLink'] not in st.session_state:
+    st.session_state['iaItemListWithLink'] = None
+if st.session_state['uploaded_file'] not in st.session_state:
+    st.session_state['uploaded_file'] = None
+if st.session_state['excel_sheet'] not in st.session_state:
+    st.session_state['excel_sheet'] = None
+if st.session_state['column_of_code'] not in st.session_state:
+    st.session_state['column_of_code'] = None
+if st.session_state['column_of_link'] not in st.session_state:
+    st.session_state['column_of_link'] = None
+if st.session_state['number_of_columns'] not in st.session_state:
+    st.session_state['number_of_columns'] = None
+if st.session_state['names_of_columns'] not in st.session_state:
+    st.session_state['names_of_columns'] = None
+if st.session_state['xpath_of_columns'] not in st.session_state:
+    st.session_state['xpath_of_columns'] = None
+if st.session_state['results'] not in st.session_state:
+    st.session_state['results'] = None
+
 def convert_df_2_csv(df):
     try:
         return df.to_csv().encode('UTF-8-SIG')
@@ -67,25 +86,6 @@ def webscraping():
     st.write('\n')
 
 file_extensions = ['CSV', 'Excel']
-
-if st.session_state['iaItemListWithLink'] not in st.session_state:
-    st.session_state['iaItemListWithLink'] = None
-if st.session_state['uploaded_file'] not in st.session_state:
-    st.session_state['uploaded_file'] = None
-if st.session_state['excel_sheet'] not in st.session_state:
-    st.session_state['excel_sheet'] = None
-if st.session_state['column_of_code'] not in st.session_state:
-    st.session_state['column_of_code'] = None
-if st.session_state['column_of_link'] not in st.session_state:
-    st.session_state['column_of_link'] = None
-if st.session_state['number_of_columns'] not in st.session_state:
-    st.session_state['number_of_columns'] = None
-if st.session_state['names_of_columns'] not in st.session_state:
-    st.session_state['names_of_columns'] = None
-if st.session_state['xpath_of_columns'] not in st.session_state:
-    st.session_state['xpath_of_columns'] = None
-if st.session_state['results'] not in st.session_state:
-    st.session_state['results'] = None
 
 st.title('Webscraping fácil')
 st.subheader('Carga tu archivo de datos')
