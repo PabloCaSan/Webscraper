@@ -18,23 +18,31 @@ import re
 from io import BytesIO
 
 if st.session_state['iaItemListWithLink'] not in st.session_state:
-    st.session_state['iaItemListWithLink'] = None
+    st.session_state['iaItemListWithLink'] = ''
+
 if st.session_state['uploaded_file'] not in st.session_state:
-    st.session_state['uploaded_file'] = None
+    st.session_state['uploaded_file'] = ''
+
 if st.session_state['excel_sheet'] not in st.session_state:
-    st.session_state['excel_sheet'] = None
+    st.session_state['excel_sheet'] = ''
+
 if st.session_state['column_of_code'] not in st.session_state:
-    st.session_state['column_of_code'] = None
+    st.session_state['column_of_code'] = ''
+
 if st.session_state['column_of_link'] not in st.session_state:
-    st.session_state['column_of_link'] = None
+    st.session_state['column_of_link'] = ''
+
 if st.session_state['number_of_columns'] not in st.session_state:
-    st.session_state['number_of_columns'] = None
+    st.session_state['number_of_columns'] = ''
+
 if st.session_state['names_of_columns'] not in st.session_state:
-    st.session_state['names_of_columns'] = None
+    st.session_state['names_of_columns'] = ''
+
 if st.session_state['xpath_of_columns'] not in st.session_state:
-    st.session_state['xpath_of_columns'] = None
+    st.session_state['xpath_of_columns'] = ''
+
 if st.session_state['results'] not in st.session_state:
-    st.session_state['results'] = None
+    st.session_state['results'] = ''
 
 def convert_df_2_csv(df):
     try:
