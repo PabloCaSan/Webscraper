@@ -36,13 +36,13 @@ if 'number_of_columns' not in st.session_state:
     st.session_state['number_of_columns'] = None
 
 if 'names_of_columns' not in st.session_state:
-    st.session_state['names_of_columns'] = None
+    st.session_state['names_of_columns'] = []
 
 if 'xpath_of_columns' not in st.session_state:
-    st.session_state['xpath_of_columns'] = None
+    st.session_state['xpath_of_columns'] = []
     
 if 'results' not in st.session_state:
-    st.session_state['results'] = None
+    st.session_state['results'] = []
 
 def convert_df_2_csv(df):
     try:
