@@ -58,11 +58,10 @@ def webscraping():
                     results.append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
                     results.append('NAN')
-                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
         except:
             for j in range(0,number_of_columns):
                 results.append('NAN')
-                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
+        iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
         st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
