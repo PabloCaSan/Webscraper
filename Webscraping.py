@@ -43,22 +43,24 @@ def webscraping():
         iaItemListWithLink[i] = ''
 
     for i in iaItemListWithLink.ItemUPC:
-        # Funciones del scraping
-        url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
         try:
+        # Funciones del scraping
+            url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
             response = requests.get(url, headers=headers) #timeout=None
+            results.append('NAN')
+            soup = BeautifulSoup(response.content, 'html.parser')
+            lxml_soup = etree.HTML(str(soup))
+            for j in range(0,number_of_columns):
+                try:
+                    results.append(lxml_soup.xpath(xpath_of_columns[j])[0])
+                except:
+                    results.append('NAN')
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
         except:
             for j in range(0,number_of_columns):
                 results.append('NAN')
-        soup = BeautifulSoup(response.content, 'html.parser')
-        lxml_soup = etree.HTML(str(soup))
-        for j in range(0,number_of_columns):
-            try:
-                results.append(lxml_soup.xpath(xpath_of_columns[j])[0])
-            except:
-                results.append('NAN')
-            iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
         
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
