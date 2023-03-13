@@ -47,7 +47,7 @@ def webscraping():
 
     for i in iaItemListWithLink.ItemUPC:
         try:
-        # Funciones del scraping
+            # Funciones del scraping
             url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
             response = requests.get(url, headers=headers) #timeout=None
@@ -58,10 +58,16 @@ def webscraping():
                     results.append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
                     results.append('NAN')
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
+                st.write(results[j])
         except:
             for j in range(0,number_of_columns):
-                results.append('NAN')
-        iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
+                try:
+                    results.append(lxml_soup.xpath(xpath_of_columns[j])[0])
+                except:
+                    results.append('NAN')
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
+                st.write(results[j])
         st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
