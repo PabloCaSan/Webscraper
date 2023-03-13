@@ -63,7 +63,7 @@ def webscraping():
             for j in range(0,number_of_columns):
                 results.append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
-        
+        st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
         remaining_time = ((longitud-contador)*time_of_exec)/contador
