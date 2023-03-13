@@ -18,7 +18,7 @@ import re
 from io import BytesIO
 
 def clear_data(to_clear):
-    to_clear = []
+    to_clear = [[],[]]
 
 def convert_df_2_csv(df):
     try:
