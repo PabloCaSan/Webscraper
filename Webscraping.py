@@ -59,7 +59,7 @@ def webscraping():
                 except:
                     results.append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
-                st.write(results[j])
+                st.write(j)
         except:
             for j in range(0,number_of_columns):
                 try:
@@ -67,7 +67,7 @@ def webscraping():
                 except:
                     results.append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[j]
-                st.write(results[j])
+                st.write(j)
         st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
