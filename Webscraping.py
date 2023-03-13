@@ -48,7 +48,6 @@ def webscraping():
             url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
             response = requests.get(url, headers=headers) #timeout=None
-            results.append('NAN')
             soup = BeautifulSoup(response.content, 'html.parser')
             lxml_soup = etree.HTML(str(soup))
             for j in range(0,number_of_columns):
