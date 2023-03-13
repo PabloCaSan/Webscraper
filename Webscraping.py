@@ -17,10 +17,8 @@ import time
 import re
 from io import BytesIO
 
-def clear_data():
-    names_of_columns = []
-    xpath_of_columns = []
-    results = []
+def clear_data(to_clear):
+    to_clear = []
 
 def convert_df_2_csv(df):
     try:
@@ -98,21 +96,21 @@ if(file_type=='CSV'):
             st.dataframe(iaItemListWithLink.astype('str'))
 if(file_type=='Excel'):
     uploaded_file = st.file_uploader("Cargua tu archivo",label_visibility="hidden")
-    excel_sheet = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='', on_change=clear_data())
+    excel_sheet = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='', on_change=clear_data(results))
     if(uploaded_file is not None and excel_sheet!=''):
         iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
         st.dataframe(iaItemListWithLink.astype('str'))
 
 if(iaItemListWithLink is not None):
-    column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='', on_change=clear_data())
-    column_of_link = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='', on_change=clear_data())
+    column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='', on_change=clear_data(results))
+    column_of_link = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='', on_change=clear_data(results))
     if(column_of_code != '' and column_of_link!=''):
         iaItemListWithLink = iaItemListWithLink.rename(columns={column_of_code:'ItemUPC', column_of_link:'Links'})
         number_of_columns = st.number_input('¿Cuántos datos quieres obtener?', value=0, step=1)
         for i in range(0,number_of_columns):
-            names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value='', on_change=clear_data()))
+            names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value='', on_change=clear_data(results)))
         for i in range(0,number_of_columns):
-            xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value='', on_change=clear_data()))
+            xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value='', on_change=clear_data(results)))
         init_ws = st.button('Iniciar')
         if init_ws == True:
             st.subheader('Webscraping')
