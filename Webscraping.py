@@ -177,18 +177,24 @@ if(file_type=='CSV'):
     uploaded_file = st.file_uploader("Carga tu archivo",label_visibility="hidden")
     if(uploaded_file is not None):
         try:
-            iaItemListWithLink = pd.read_csv(uploaded_file, encoding='UTF-8-SIG')
+            try:
+                iaItemListWithLink = pd.read_csv(uploaded_file, encoding='UTF-8-SIG')
+            except:
+                iaItemListWithLink = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
+            st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping')
+            st.table(iaItemListWithLink.astype('str'))
         except:
-            iaItemListWithLink = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
-        st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping')
-        st.table(iaItemListWithLink.astype('str'))
+            st.write('¡Error!, revisa el tipo de archivo')
 if(file_type=='Excel'):
     uploaded_file = st.file_uploader("Carga tu archivo",label_visibility="hidden")
     excel_sheet = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='')
     if(uploaded_file is not None and excel_sheet!=''):
-        iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
-        st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping, si no es lo que esperabas, cambia el nombre de la hoja')
-        st.table(iaItemListWithLink.astype('str'))
+        try:
+            iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
+            st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping, si no es lo que esperabas, cambia el nombre de la hoja')
+            st.table(iaItemListWithLink.astype('str'))
+        except:
+            st.write('¡Error!, revisa el tipo de archivo')
 
 if(iaItemListWithLink is not None):
     column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
