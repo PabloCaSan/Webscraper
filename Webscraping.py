@@ -17,6 +17,17 @@ import time
 import re
 from io import BytesIO
 
+streamlit_style = """
+.stSelectbox > div[data-baseweb="select"] > div {
+    border-radius: 20px;
+}
+
+selection[data-testid="stFileUploadDropzone"] {
+    border-radius: 20px;
+}
+"""
+st.markdown(streamlit_style, unsafe_allow_html=True)
+
 if 'ws_flag' not in st.session_state:
     st.session_state['ws_flag'] = False
 
