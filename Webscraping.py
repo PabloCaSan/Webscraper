@@ -36,6 +36,10 @@ div[data-baseweb="popover"] {
     border-radius: 20px;
 }
 
+div[data-baseweb="popover"] > div {
+    border-radius: 20px;
+}
+
 div[data-baseweb="popover"] > div > div > ul {
     border-radius: 20px;
 }
