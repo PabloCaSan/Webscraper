@@ -126,7 +126,7 @@ if(iaItemListWithLink is not None):
             names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value='', on_change=clear_data(results)))
         for i in range(0,number_of_columns):
             xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value='', on_change=clear_data(results)))
-        print(iaItemListWithLink[iaItemListWithLink['Links'].str.contains(r'^www')].head(1))
+        st.write(iaItemListWithLink[iaItemListWithLink['Links'].str.contains(r'^www')].head(1))
         #preview(iaItemListWithLink[iaItemListWithLink['Links'].str.contains(r'^www')].head(1))
         init_ws = st.button('Iniciar')
         if init_ws == True:
