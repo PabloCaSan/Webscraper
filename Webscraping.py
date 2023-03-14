@@ -34,6 +34,14 @@ def convert_df_2_excel(df):
     processed_data = output.getvalue()
     return processed_data
 
+def preview(url_preview):
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
+    response = requests.get(url_preview, headers=headers) #timeout=None
+    soup = BeautifulSoup(response.content, 'html.parser')
+    lxml_soup = etree.HTML(str(soup))
+    for j in range(0,number_of_columns):
+        print(lxml_soup.xpath(xpath_of_columns[j])[0])
+
 def webscraping():
     my_bar = st.progress(0)
     # Variables del contador
@@ -118,6 +126,8 @@ if(iaItemListWithLink is not None):
             names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value='', on_change=clear_data(results)))
         for i in range(0,number_of_columns):
             xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value='', on_change=clear_data(results)))
+        print(iaItemListWithLink[iaItemListWithLink['Links'].str.contains(r'^www')].head(1))
+        preview(iaItemListWithLink[iaItemListWithLink['Links'].str.contains(r'^www')].head(1))
         init_ws = st.button('Iniciar')
         if init_ws == True:
             st.subheader('Webscraping')
