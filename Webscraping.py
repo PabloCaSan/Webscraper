@@ -30,9 +30,9 @@ section[data-testid="stFileUploadDropzone"] {
 
 button {
     border-radius: 20px !important;
-    background-color: #B72A4A;
-    color: #ffffff;
-    text-align: center;
+    background-color: #B72A4A !important;
+    color: #ffffff !important;
+    text-align: center !important;
 }
 
 div[data-baseweb="popover"] {
@@ -188,21 +188,18 @@ if(iaItemListWithLink is not None):
             webscraping()
             st.subheader('Resultados')
             st.table(iaItemListWithLink)
-
             csv_file = convert_df_2_csv(iaItemListWithLink)
-            st.download_button(
-                label="Descargar CSV",
-                data=csv_file,
-                file_name='webscraping_'+ re.sub("\.[a-zA-Z]+$", '',uploaded_file.name) +'.csv',
-                mime='text/csv',
-            )
-
             excel_file = convert_df_2_excel(iaItemListWithLink)
-            st.download_button(
-                label="Descargar excel",
-                data=excel_file,
-                file_name='webscraping_'+ re.sub("\.[a-zA-Z]+$", '',uploaded_file.name) +'.xlsx',
-                mime='application/vnd.ms-excel'
-            )
+            col1, col2, col3 = st.columns([1,1,1])
+            with col1:
+                st.download_button(label="Descargar CSV",
+                                    data=csv_file,
+                                    file_name='webscraping_'+ re.sub("\.[a-zA-Z]+$", '',uploaded_file.name) +'.csv',
+                                    mime='text/csv',)
+            with col3:
+                st.download_button(label="Descargar excel",
+                    data=excel_file,
+                    file_name='webscraping_'+ re.sub("\.[a-zA-Z]+$", '',uploaded_file.name) +'.xlsx',
+                    mime='application/vnd.ms-excel')
 
             st.write('Si necesitas hacer un nuevo webscraping, simplemente recarga esta página, se borrarán los datos anteriores que no hayas descargado')
