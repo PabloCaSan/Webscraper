@@ -37,18 +37,19 @@ button {
 
 button[kind="primary"] {
     width: 100%;
+    transition: 1s;
 }
 
 .stDownloadButton > button {
     width: 100%;
 }
 
-button:focus {
-    background-color: #B72A4A;
+button:hover {
+    background-color: #414243 !important;
 }
 
 button:active {
-    background-color: #B72A4A;
+    background-color: #414243 !important;
 }
 
 div[data-baseweb="popover"] {
