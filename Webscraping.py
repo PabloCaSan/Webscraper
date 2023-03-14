@@ -127,7 +127,7 @@ if(iaItemListWithLink is not None):
     column_of_link = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='', on_change=clear_data(results))
     if(column_of_code != '' and column_of_link!=''):
         iaItemListWithLink = iaItemListWithLink.rename(columns={column_of_code:'ItemUPC', column_of_link:'Links'})
-        number_of_columns = st.number_input('¿Cuántos datos quieres obtener?', value=0, step=1)
+        number_of_columns = st.number_input('¿Cuántos datos quieres obtener?', value=1, step=1)
         for i in range(0,number_of_columns):
             names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value='', on_change=clear_data(results)))
         for i in range(0,number_of_columns):
