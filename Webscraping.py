@@ -184,7 +184,7 @@ if(file_type=='CSV'):
             st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping')
             st.table(iaItemListWithLink.astype('str'))
         except:
-            st.write('¡Error!, revisa el tipo de archivo')
+            st.error('¡Error!, revisa el tipo de archivo')
 if(file_type=='Excel'):
     uploaded_file = st.file_uploader("Carga tu archivo",label_visibility="hidden")
     excel_sheet = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='')
@@ -194,7 +194,7 @@ if(file_type=='Excel'):
             st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping, si no es lo que esperabas, cambia el nombre de la hoja')
             st.table(iaItemListWithLink.astype('str'))
         except:
-            st.write('¡Error!, revisa el tipo de archivo')
+            st.error('¡Error!, revisa el tipo de archivo')
 
 if(iaItemListWithLink is not None):
     column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
