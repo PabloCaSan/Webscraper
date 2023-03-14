@@ -63,6 +63,7 @@ def webscraping():
                 st.write(results[i])
         except:
             for j in range(0,number_of_columns):
+                results.append([])
                 try:
                     results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
