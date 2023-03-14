@@ -54,20 +54,21 @@ def webscraping():
             soup = BeautifulSoup(response.content, 'html.parser')
             lxml_soup = etree.HTML(str(soup))
             for j in range(0,number_of_columns):
+                results.append([])
                 try:
-                    results[i][j].append(lxml_soup.xpath(xpath_of_columns[j])[0])
+                    results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
-                    results[i][j].append('NAN')
+                    results[i].append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
-                st.write(results[i][j])
+                st.write(results[i])
         except:
             for j in range(0,number_of_columns):
                 try:
-                    results[i][j].append(lxml_soup.xpath(xpath_of_columns[j])[0])
+                    results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
-                    results[i][j].append('NAN')
+                    results[i].append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
-                st.write(results[i][j])
+                st.write(results[i])
         st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
@@ -83,7 +84,7 @@ file_extensions = ['CSV', 'Excel']
 iaItemListWithLink = None
 names_of_columns = []
 xpath_of_columns = []
-results = [[],[]]
+results = [[]]
 
 st.title('Webscraping fácil')
 st.subheader('Cargua tu archivo de datos')
