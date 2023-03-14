@@ -25,11 +25,11 @@ streamlit_style = """
 }
 
 section[data-testid="stFileUploadDropzone"] {
-    border-radius: 20px;
+    border-radius: 40px;
 }
 
 button {
-    border-radius: 20px;
+    border-radius: 20px !important;
 }
 
 </style>
