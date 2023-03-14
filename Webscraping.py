@@ -34,6 +34,7 @@ button {
     color: #ffffff !important;
     text-align: center !important;
     transition: 0.5s;
+    border-color: transparent !important; 
 }
 
 button[kind="primary"] {
