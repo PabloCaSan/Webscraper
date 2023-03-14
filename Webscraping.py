@@ -17,29 +17,8 @@ import time
 import re
 from io import BytesIO
 
-if 'iaItemListWithLink' not in st.session_state:
-    st.session_state['iaItemListWithLink'] = None
-
-if 'file_type' not in st.session_state:
-    st.session_state['file_type'] = None
-
-if 'excel_sheet' not in st.session_state:
-    st.session_state['excel_sheet'] = None
-
-if 'column_of_code' not in st.session_state:
-    st.session_state['column_of_code'] = None
-
-if 'column_of_link' not in st.session_state:
-    st.session_state['column_of_link'] = None
-
-if 'number_of_columns' not in st.session_state:
-    st.session_state['number_of_columns'] = None
-
-if 'names_of_columns' not in st.session_state:
-    st.session_state['names_of_columns'] = []
-
-if 'xpath_of_columns' not in st.session_state:
-    st.session_state['xpath_of_columns'] = []
+if 'ws_flag' not in st.session_state:
+    st.session_state['ws_flag'] = False
 
 def convert_df_2_csv(df):
     try:
@@ -61,48 +40,49 @@ def preview(url_preview):
         response = requests.get(url_preview, headers=headers) #timeout=None
         soup = BeautifulSoup(response.content, 'html.parser')
         lxml_soup = etree.HTML(str(soup))
-        for j in range(0,st.session_state['number_of_columns']):
-            st.write('Columna ', j, ': ', st.session_state['names_of_columns'][j])
-            st.write('Resultado ', j, ': ', lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
+        for j in range(0,number_of_columns):
+            st.write('Columna ', j, ': ', names_of_columns[j])
+            st.write('Resultado ', j, ': ', lxml_soup.xpath(xpath_of_columns[j])[0])
     except:
-        for j in range(0,st.session_state['number_of_columns']):
+        for j in range(0,number_of_columns):
+            #st.write('Columna ', j, ': ', names_of_columns[j])
             st.write('Resultado ', j, ': ¡Error!')
 
 def webscraping():
     my_bar = st.progress(0)
     # Variables del contador
     contador = 1
-    longitud = len(st.session_state['iaItemListWithLink'])
+    longitud = len(iaItemListWithLink)
     contador_porcentaje = contador/longitud * 100
     start_time = time.time()
 
-    for i in st.session_state['names_of_columns']:
-        st.session_state['iaItemListWithLink'][i] = ''
+    for i in names_of_columns:
+        iaItemListWithLink[i] = ''
 
-    for i in st.session_state['iaItemListWithLink'].ItemUPC:
+    for i in iaItemListWithLink.ItemUPC:
         try:
             # Funciones del scraping
-            url = st.session_state['iaItemListWithLink']['Links'][st.session_state['iaItemListWithLink']['ItemUPC']==i].values[0]
+            url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
             response = requests.get(url, headers=headers) #timeout=None
             soup = BeautifulSoup(response.content, 'html.parser')
             lxml_soup = etree.HTML(str(soup))
-            for j in range(0,st.session_state['number_of_columns']):
+            for j in range(0,number_of_columns):
                 results.append([])
                 try:
-                    results[i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
+                    results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
                     results[i].append('NAN')
-                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = results[i][j]
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
                 st.write(results[i])
         except:
-            for j in range(0,st.session_state['number_of_columns']):
+            for j in range(0,number_of_columns):
                 results.append([])
                 try:
-                    results[i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
+                    results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
                     results[i].append('NAN')
-                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = results[i][j]
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
                 st.write(results[i])
         st.write(results)
         # Funciones del contador
@@ -116,51 +96,56 @@ def webscraping():
     st.write('\n')
 
 file_extensions = ['CSV', 'Excel']
+iaItemListWithLink = None
+names_of_columns = []
+xpath_of_columns = []
 results = [[]]
 
 st.title('Webscraping fácil')
 st.subheader('Cargua tu archivo de datos')
-st.session_state['file_type'] = st.selectbox(
+file_type = st.selectbox(
                 'Selecciona el tipo de archivo:',
                 file_extensions)
-if(st.session_state['file_type']=='CSV'):
+if(file_type=='CSV'):
     uploaded_file = st.file_uploader("Cargua tu archivo",label_visibility="hidden")
     if(uploaded_file is not None):
         try:
-            st.session_state['iaItemListWithLink'] = pd.read_csv(uploaded_file, encoding='UTF-8-SIG')
-            st.dataframe(st.session_state['iaItemListWithLink'].astype('str'))
+            iaItemListWithLink = pd.read_csv(uploaded_file, encoding='UTF-8-SIG')
+            st.dataframe(iaItemListWithLink.astype('str'))
         except:
-            st.session_state['iaItemListWithLink'] = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
-            st.dataframe(st.session_state['iaItemListWithLink'].astype('str'))
-if(st.session_state['file_type']=='Excel'):
+            iaItemListWithLink = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
+            st.dataframe(iaItemListWithLink.astype('str'))
+if(file_type=='Excel'):
     uploaded_file = st.file_uploader("Cargua tu archivo",label_visibility="hidden")
-    st.session_state['excel_sheet'] = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='')
-    if(uploaded_file is not None and st.session_state['excel_sheet'] != ''):
-        st.session_state['iaItemListWithLink'] = pd.read_excel(uploaded_file, sheet_name=st.session_state['excel_sheet'])
-        st.dataframe(st.session_state['iaItemListWithLink'].astype('str'))
+    excel_sheet = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='')
+    if(uploaded_file is not None and excel_sheet!=''):
+        iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
+        st.dataframe(iaItemListWithLink.astype('str'))
 
-if(st.session_state['iaItemListWithLink'] is not None):
-    st.session_state['column_of_code'] = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
-    st.session_state['column_of_link'] = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='')
-    if(st.session_state['column_of_code'] != '' and st.session_state['column_of_link']!=''):
-        st.session_state['iaItemListWithLink'] = st.session_state['iaItemListWithLink'].rename(columns={st.session_state['column_of_code']:'ItemUPC', st.session_state['column_of_link']:'Links'})
-        st.session_state['number_of_columns'] = st.number_input('¿Cuántos datos quieres obtener?', value=1, step=1)
-        for i in range(0,st.session_state['number_of_columns']):
-            st.session_state['names_of_columns'].append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value=''))
-        for i in range(0,st.session_state['number_of_columns']):
-            st.session_state['xpath_of_columns'].append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value=''))
-        if(st.session_state['xpath_of_columns'][st.session_state['number_of_columns']-1] is not None):
+if(iaItemListWithLink is not None):
+    column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
+    column_of_link = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='')
+    if(column_of_code != '' and column_of_link!=''):
+        iaItemListWithLink = iaItemListWithLink.rename(columns={column_of_code:'ItemUPC', column_of_link:'Links'})
+        number_of_columns = st.number_input('¿Cuántos datos quieres obtener?', value=1, step=1)
+        for i in range(0,number_of_columns):
+            names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value=''))
+        for i in range(0,number_of_columns):
+            xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value=''))
+        if(xpath_of_columns[number_of_columns-1] is not None):
             st.title('Vista previa')
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
-            preview(st.session_state['iaItemListWithLink']['Links'][st.session_state['iaItemListWithLink']['Links'].str.contains(r'\.com')].head(1).values[0])
+            preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
         init_ws = st.button('Iniciar')
         if init_ws == True:
+            st.session_state['ws_flag'] = True
+        if st.session_state['ws_flag'] == True:
             st.subheader('Webscraping')
             webscraping()
             st.subheader('Resultados')
-            st.dataframe(st.session_state['iaItemListWithLink'])
+            st.dataframe(iaItemListWithLink)
 
-            csv_file = convert_df_2_csv(st.session_state['iaItemListWithLink'])
+            csv_file = convert_df_2_csv(iaItemListWithLink)
             st.download_button(
                 label="Descargar CSV",
                 data=csv_file,
@@ -168,7 +153,7 @@ if(st.session_state['iaItemListWithLink'] is not None):
                 mime='text/csv',
             )
 
-            excel_file = convert_df_2_excel(st.session_state['iaItemListWithLink'])
+            excel_file = convert_df_2_excel(iaItemListWithLink)
             st.download_button(
                 label="Descargar excel",
                 data=excel_file,
