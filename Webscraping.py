@@ -44,7 +44,9 @@ div[data-baseweb="popover"] > div > div > ul {
     border-radius: 20px;
 }
 
-
+.stTextInput > div {
+    border-radius: 20px;
+}
 
 </style>
 """
@@ -131,6 +133,7 @@ xpath_of_columns = []
 results = [[]]
 
 st.title('Webscraping fácil')
+st.write('Solo necesitas un archivo Excel o CSV con una columna de enlaces y una columna de SKU, UPC o simplemente índices (una columns con valores distintos)')
 st.subheader('Carga tu archivo de datos')
 file_type = st.selectbox(
                 'Selecciona el tipo de archivo:',
@@ -171,7 +174,6 @@ if(iaItemListWithLink is not None):
             st.session_state['ws_flag'] = True
         if st.session_state['ws_flag'] == True:
             st.subheader('Webscraping')
-            st.write('Solo necesitas un archivo Excel o CSV con una columna de enlaces y una columna de SKU, UPC o simplemente índices (una columns con valores distintos)')
             webscraping()
             st.subheader('Resultados')
             st.table(iaItemListWithLink)
