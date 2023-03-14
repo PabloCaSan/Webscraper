@@ -44,11 +44,6 @@ if 'xpath_of_columns' not in st.session_state:
 if 'results' not in st.session_state:
     st.session_state['results'] = [[]]
 
-def clear_data():
-    st.session_state['names_of_columns'] = []
-    st.session_state['xpath_of_columns'] = []
-    st.session_state['results'] = [[]]
-
 def convert_df_2_csv(df):
     try:
         return df.to_csv().encode('UTF-8-SIG')
@@ -101,7 +96,7 @@ def webscraping():
                     st.session_state['results'][i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
                 except:
                     st.session_state['results'][i].append('NAN')
-                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = results[i][j]
+                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = st.session_state['results'][i][j]
                 st.write(st.session_state['results'][i])
         except:
             for j in range(0,st.session_state['number_of_columns']):
@@ -110,7 +105,7 @@ def webscraping():
                     st.session_state['results'][i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
                 except:
                     st.session_state['results'][i].append('NAN')
-                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = results[i][j]
+                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = st.session_state['results'][i][j]
                 st.write(st.session_state['results'][i])
         st.write(st.session_state['results'])
         # Funciones del contador
@@ -141,21 +136,21 @@ if(st.session_state['file_type']=='CSV'):
             st.dataframe(st.session_state['iaItemListWithLink'].astype('str'))
 if(st.session_state['file_type']=='Excel'):
     uploaded_file = st.file_uploader("Cargua tu archivo",label_visibility="hidden")
-    st.session_state['excel_sheet'] = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='', on_change=clear_data())
+    st.session_state['excel_sheet'] = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='')
     if(uploaded_file is not None and st.session_state['excel_sheet'] != ''):
         st.session_state['iaItemListWithLink'] = pd.read_excel(uploaded_file, sheet_name=st.session_state['excel_sheet'])
         st.dataframe(st.session_state['iaItemListWithLink'].astype('str'))
 
 if(st.session_state['iaItemListWithLink'] is not None):
-    st.session_state['column_of_code'] = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='', on_change=clear_data())
-    st.session_state['column_of_link'] = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='', on_change=clear_data())
+    st.session_state['column_of_code'] = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
+    st.session_state['column_of_link'] = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='')
     if(st.session_state['column_of_code'] != '' and st.session_state['column_of_link']!=''):
         st.session_state['iaItemListWithLink'] = st.session_state['iaItemListWithLink'].rename(columns={st.session_state['column_of_code']:'ItemUPC', st.session_state['column_of_link']:'Links'})
         st.session_state['number_of_columns'] = st.number_input('¿Cuántos datos quieres obtener?', value=1, step=1)
         for i in range(0,st.session_state['number_of_columns']):
-            st.session_state['names_of_columns'].append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value='', on_change=clear_data()))
+            st.session_state['names_of_columns'].append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value=''))
         for i in range(0,st.session_state['number_of_columns']):
-            st.session_state['xpath_of_columns'].append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value='', on_change=clear_data()))
+            st.session_state['xpath_of_columns'].append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value=''))
         if(st.session_state['xpath_of_columns'][st.session_state['number_of_columns']-1] is not None):
             st.title('Vista previa')
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
