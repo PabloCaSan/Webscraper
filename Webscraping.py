@@ -32,9 +32,15 @@ button {
     border-radius: 20px !important;
 }
 
+div[data-baseweb="popover"] > div {
+    border-radius: 20px;
+}
+
 div[data-baseweb="popover"] > div > div > ul {
     border-radius: 20px;
 }
+
+
 
 </style>
 """
