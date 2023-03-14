@@ -43,6 +43,14 @@ button[kind="primary"] {
     width: 100%;
 }
 
+button:focus {
+    background-color: #B72A4A;
+}
+
+button:active {
+    background-color: #B72A4A;
+}
+
 div[data-baseweb="popover"] {
     border-radius: 20px;
 }
@@ -192,7 +200,7 @@ if(iaItemListWithLink is not None):
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
             preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
         col1, col2, col3 = st.columns([1,1,1])
-        with col2:
+        with col1:
             init_ws = st.button('Iniciar', type='primary')
         if init_ws == True:
             st.session_state['ws_flag'] = True
@@ -215,4 +223,4 @@ if(iaItemListWithLink is not None):
                     file_name='webscraping_'+ re.sub("\.[a-zA-Z]+$", '',uploaded_file.name) +'.xlsx',
                     mime='application/vnd.ms-excel')
 
-            st.write('Si necesitas hacer un nuevo webscraping, simplemente recarga esta página, se borrarán los datos anteriores que no hayas descargado')
+            st.write('Si necesitas hacer un nuevo webscraping, simplemente recarga esta página. Se borrarán los datos anteriores que no hayas descargado')
