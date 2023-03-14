@@ -41,12 +41,6 @@ if 'names_of_columns' not in st.session_state:
 if 'xpath_of_columns' not in st.session_state:
     st.session_state['xpath_of_columns'] = []
 
-if 'results' not in st.session_state:
-    st.session_state['results'] = [[]]
-
-if 'webscraping_flag' not in st.session_state:
-    st.session_state['webscraping_flag'] = False
-
 def convert_df_2_csv(df):
     try:
         return df.to_csv().encode('UTF-8-SIG')
@@ -94,23 +88,23 @@ def webscraping():
             soup = BeautifulSoup(response.content, 'html.parser')
             lxml_soup = etree.HTML(str(soup))
             for j in range(0,st.session_state['number_of_columns']):
-                st.session_state['results'].append([])
+                results.append([])
                 try:
-                    st.session_state['results'][i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
+                    results[i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
                 except:
-                    st.session_state['results'][i].append('NAN')
-                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = st.session_state['results'][i][j]
-                st.write(st.session_state['results'][i])
+                    results[i].append('NAN')
+                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = results[i][j]
+                st.write(results[i])
         except:
             for j in range(0,st.session_state['number_of_columns']):
-                st.session_state['results'].append([])
+                results.append([])
                 try:
-                    st.session_state['results'][i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
+                    results[i].append(lxml_soup.xpath(st.session_state['xpath_of_columns'][j])[0])
                 except:
-                    st.session_state['results'][i].append('NAN')
-                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = st.session_state['results'][i][j]
-                st.write(st.session_state['results'][i])
-        st.write(st.session_state['results'])
+                    results[i].append('NAN')
+                st.session_state['iaItemListWithLink'][st.session_state['names_of_columns'][j]][st.session_state['iaItemListWithLink']['ItemUPC']==i] = results[i][j]
+                st.write(results[i])
+        st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
         remaining_time = ((longitud-contador)*time_of_exec)/contador
@@ -122,6 +116,7 @@ def webscraping():
     st.write('\n')
 
 file_extensions = ['CSV', 'Excel']
+results = [[]]
 
 st.title('Webscraping fácil')
 st.subheader('Cargua tu archivo de datos')
@@ -160,8 +155,6 @@ if(st.session_state['iaItemListWithLink'] is not None):
             preview(st.session_state['iaItemListWithLink']['Links'][st.session_state['iaItemListWithLink']['Links'].str.contains(r'\.com')].head(1).values[0])
         init_ws = st.button('Iniciar')
         if init_ws == True:
-            st.session_state['webscraping_flag'] = True
-        if st.session_state['webscraping_flag'] == True:
             st.subheader('Webscraping')
             webscraping()
             st.subheader('Resultados')
