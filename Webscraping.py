@@ -48,6 +48,10 @@ div[data-baseweb="popover"] > div > div > ul {
     border-radius: 20px;
 }
 
+.stNumberInput > div > div[data-baseweb="input"] {
+    border-radius: 20px;
+}
+
 </style>
 """
 st.markdown(streamlit_style, unsafe_allow_html=True)
