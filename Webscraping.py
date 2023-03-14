@@ -22,6 +22,7 @@ streamlit_style = """
 
 .stSelectbox > div[data-baseweb="select"] > div {
     border-radius: 20px;
+    border-color: transparent;
 }
 
 section[data-testid="stFileUploadDropzone"] {
@@ -33,7 +34,7 @@ button {
     background-color: #B72A4A !important;
     color: #ffffff !important;
     text-align: center !important;
-    transition: 0.5s;
+    transition: 0.5s !important;
     border-color: transparent !important; 
 }
 
@@ -70,6 +71,7 @@ div[data-baseweb="popover"] > div > div > ul {
 
 .stTextInput > div {
     border-radius: 20px;
+    border-color: transparent;
 }
 
 .stNumberInput > div > div[data-baseweb="input"] {
