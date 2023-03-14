@@ -40,8 +40,8 @@ def preview(url_preview):
     soup = BeautifulSoup(response.content, 'html.parser')
     lxml_soup = etree.HTML(str(soup))
     for j in range(0,number_of_columns):
-        st.write(names_of_columns[j])
-        st.write(lxml_soup.xpath(xpath_of_columns[j])[0])
+        st.write('Columna: ', names_of_columns[j])
+        st.write('Resultado: ', lxml_soup.xpath(xpath_of_columns[j])[0])
 
 def webscraping():
     my_bar = st.progress(0)
