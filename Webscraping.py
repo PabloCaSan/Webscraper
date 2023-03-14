@@ -45,7 +45,7 @@ def preview(url_preview):
             st.write('Resultado ', j, ': ', lxml_soup.xpath(xpath_of_columns[j])[0])
     except:
         for j in range(0,number_of_columns):
-            st.write('Columna ', j, ': ', names_of_columns[j])
+            #st.write('Columna ', j, ': ', names_of_columns[j])
             st.write('Resultado ', j, ': ¡Error!')
 
 def webscraping():
