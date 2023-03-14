@@ -33,7 +33,7 @@ button {
     background-color: #B72A4A !important;
     color: #ffffff !important;
     text-align: center !important;
-    transition: 1s;
+    transition: 0.5s;
 }
 
 button[kind="primary"] {
@@ -46,15 +46,17 @@ button[kind="primary"] {
 
 button:hover {
     background-color: #414243 !important;
+    transform: scale(1.05);
 }
 
 button:active {
     background-color: #414243 !important;
+    transform: scale(1.05);
 }
 
 div[data-baseweb="popover"] {
     border-radius: 20px;
-    transition: 1s;
+    transition: 0.5s;
 }
 
 div[data-baseweb="popover"] > div {
