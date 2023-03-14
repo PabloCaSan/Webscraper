@@ -45,7 +45,6 @@ def preview(url_preview):
             st.write('Resultado ', j, ': ', lxml_soup.xpath(xpath_of_columns[j])[0])
     except:
         for j in range(0,number_of_columns):
-            #st.write('Columna ', j, ': ', names_of_columns[j])
             st.write('Resultado ', j, ': ¡Error!')
 
 def webscraping():
@@ -74,7 +73,6 @@ def webscraping():
                 except:
                     results[i].append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
-                st.write(results[i])
         except:
             for j in range(0,number_of_columns):
                 results.append([])
@@ -83,8 +81,6 @@ def webscraping():
                 except:
                     results[i].append('NAN')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
-                st.write(results[i])
-        st.write(results)
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
         remaining_time = ((longitud-contador)*time_of_exec)/contador
