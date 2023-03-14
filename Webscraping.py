@@ -184,7 +184,7 @@ if(iaItemListWithLink is not None):
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
             preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
         col1, col2, col3 = st.columns([1,1,1])
-        with col1:
+        with col3:
             init_ws = st.button('Iniciar')
         if init_ws == True:
             st.session_state['ws_flag'] = True
