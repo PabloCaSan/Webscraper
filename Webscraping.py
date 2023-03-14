@@ -193,7 +193,7 @@ if(iaItemListWithLink is not None):
             preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
         col1, col2, col3 = st.columns([1,1,1])
         with col2:
-            init_ws = st.button('Iniciar', type='Primary')
+            init_ws = st.button('Iniciar', type='primary')
         if init_ws == True:
             st.session_state['ws_flag'] = True
         if st.session_state['ws_flag'] == True:
