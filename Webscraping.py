@@ -40,6 +40,7 @@ def preview(url_preview):
     soup = BeautifulSoup(response.content, 'html.parser')
     lxml_soup = etree.HTML(str(soup))
     for j in range(0,number_of_columns):
+        st.write(names_of_columns[j])
         st.write(lxml_soup.xpath(xpath_of_columns[j])[0])
 
 def webscraping():
@@ -127,6 +128,8 @@ if(iaItemListWithLink is not None):
         for i in range(0,number_of_columns):
             xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value='', on_change=clear_data(results)))
         if(xpath_of_columns[number_of_columns-1] is not None):
+            st.title('Vista previa')
+            st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
             preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
         init_ws = st.button('Iniciar')
         if init_ws == True:
