@@ -44,8 +44,8 @@ if 'xpath_of_columns' not in st.session_state:
 if 'results' not in st.session_state:
     st.session_state['results'] = [[]]
 
-if 'init_ws' not in st.session_state:
-    st.session_state['init_ws'] = False
+if 'webscraping_flag' not in st.session_state:
+    st.session_state['webscraping_flag'] = False
 
 def convert_df_2_csv(df):
     try:
@@ -158,8 +158,10 @@ if(st.session_state['iaItemListWithLink'] is not None):
             st.title('Vista previa')
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
             preview(st.session_state['iaItemListWithLink']['Links'][st.session_state['iaItemListWithLink']['Links'].str.contains(r'\.com')].head(1).values[0])
-        st.session_state['init_ws'] = st.button('Iniciar')
-        if st.session_state['init_ws'] == True:
+        init_ws = st.button('Iniciar')
+        if init_ws == True:
+            st.session_state['webscraping_flag'] = True
+        if st.session_state['webscraping_flag'] == True:
             st.subheader('Webscraping')
             webscraping()
             st.subheader('Resultados')
