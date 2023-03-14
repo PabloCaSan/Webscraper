@@ -58,6 +58,9 @@ div[data-baseweb="popover"] > div > div > ul {
 thead tr th:first-child {display:none}
 tbody th {display:none}
 
+.stAlert > div {
+    border-radius: 40px;
+}
 
 </style>
 """
@@ -180,7 +183,9 @@ if(iaItemListWithLink is not None):
             st.subheader('Vista previa')
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
             preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
-        init_ws = st.button('Iniciar')
+        col1, col2, col3 = st.columns([1,1,1])
+        with col1:
+            init_ws = st.button('Iniciar')
         if init_ws == True:
             st.session_state['ws_flag'] = True
         if st.session_state['ws_flag'] == True:
