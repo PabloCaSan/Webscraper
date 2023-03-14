@@ -18,6 +18,8 @@ import re
 from io import BytesIO
 
 streamlit_style = """
+<style>
+
 .stSelectbox > div[data-baseweb="select"] > div {
     border-radius: 20px;
 }
@@ -25,6 +27,8 @@ streamlit_style = """
 selection[data-testid="stFileUploadDropzone"] {
     border-radius: 20px;
 }
+
+</style>
 """
 st.markdown(streamlit_style, unsafe_allow_html=True)
 
