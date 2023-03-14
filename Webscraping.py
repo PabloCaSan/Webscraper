@@ -98,25 +98,26 @@ xpath_of_columns = []
 results = [[]]
 
 st.title('Webscraping fácil')
-st.subheader('Cargua tu archivo de datos')
+st.subheader('Carga tu archivo de datos')
 file_type = st.selectbox(
                 'Selecciona el tipo de archivo:',
                 file_extensions)
 if(file_type=='CSV'):
-    uploaded_file = st.file_uploader("Cargua tu archivo",label_visibility="hidden")
+    uploaded_file = st.file_uploader("Carga tu archivo",label_visibility="hidden")
     if(uploaded_file is not None):
         try:
             iaItemListWithLink = pd.read_csv(uploaded_file, encoding='UTF-8-SIG')
-            st.dataframe(iaItemListWithLink.astype('str'))
         except:
             iaItemListWithLink = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
-            st.dataframe(iaItemListWithLink.astype('str'))
+        st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping')
+        st.table(iaItemListWithLink.astype('str'))
 if(file_type=='Excel'):
-    uploaded_file = st.file_uploader("Cargua tu archivo",label_visibility="hidden")
+    uploaded_file = st.file_uploader("Carga tu archivo",label_visibility="hidden")
     excel_sheet = st.text_input(label='Escribe el nombre o número de la página que contiene los enlaces', value='')
     if(uploaded_file is not None and excel_sheet!=''):
         iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
-        st.dataframe(iaItemListWithLink.astype('str'))
+        st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping, si no es lo que esperabas, cambia el nombre de la hoja')
+        st.table(iaItemListWithLink.astype('str'))
 
 if(iaItemListWithLink is not None):
     column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
@@ -129,7 +130,7 @@ if(iaItemListWithLink is not None):
         for i in range(0,number_of_columns):
             xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value=''))
         if(xpath_of_columns[number_of_columns-1] is not None):
-            st.title('Vista previa')
+            st.subheader('Vista previa')
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
             preview(iaItemListWithLink['Links'][iaItemListWithLink['Links'].str.contains(r'\.com')].head(1).values[0])
         init_ws = st.button('Iniciar')
@@ -137,9 +138,10 @@ if(iaItemListWithLink is not None):
             st.session_state['ws_flag'] = True
         if st.session_state['ws_flag'] == True:
             st.subheader('Webscraping')
+            st.write('Solo necesitas un archivo Excel o CSV con una columna de enlaces y una columna de SKU, UPC o simplemente índices (una columns con valores distintos)')
             webscraping()
             st.subheader('Resultados')
-            st.dataframe(iaItemListWithLink)
+            st.table(iaItemListWithLink)
 
             csv_file = convert_df_2_csv(iaItemListWithLink)
             st.download_button(
@@ -156,3 +158,5 @@ if(iaItemListWithLink is not None):
                 file_name='webscraping_'+ re.sub("\.[a-zA-Z]+$", '',uploaded_file.name) +'.xlsx',
                 mime='application/vnd.ms-excel'
             )
+
+            st.write('Si necesitas hacer un nuevo webscraping, simplemente recarga esta página, se borrarán los datos anteriores que no hayas descargado')
