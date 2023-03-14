@@ -35,13 +35,18 @@ def convert_df_2_excel(df):
     return processed_data
 
 def preview(url_preview):
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
-    response = requests.get(url_preview, headers=headers) #timeout=None
-    soup = BeautifulSoup(response.content, 'html.parser')
-    lxml_soup = etree.HTML(str(soup))
-    for j in range(0,number_of_columns):
-        st.write('Columna ', j, ': ', names_of_columns[j])
-        st.write('Resultado ', j, ': ', lxml_soup.xpath(xpath_of_columns[j])[0])
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
+        response = requests.get(url_preview, headers=headers) #timeout=None
+        soup = BeautifulSoup(response.content, 'html.parser')
+        lxml_soup = etree.HTML(str(soup))
+        for j in range(0,number_of_columns):
+            st.write('Columna ', j, ': ', names_of_columns[j])
+            st.write('Resultado ', j, ': ', lxml_soup.xpath(xpath_of_columns[j])[0])
+    except:
+        for j in range(0,number_of_columns):
+            st.write('Columna ', j, ': ', names_of_columns[j])
+            st.write('Resultado ', j, ': ¡Error!')
 
 def webscraping():
     my_bar = st.progress(0)
