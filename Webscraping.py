@@ -24,7 +24,11 @@ streamlit_style = """
     border-radius: 20px;
 }
 
-selection[data-testid="stFileUploadDropzone"] {
+section[data-testid="stFileUploadDropzone"] {
+    border-radius: 20px;
+}
+
+button {
     border-radius: 20px;
 }
 
