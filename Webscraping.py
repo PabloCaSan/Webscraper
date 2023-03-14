@@ -33,11 +33,11 @@ button {
     background-color: #B72A4A !important;
     color: #ffffff !important;
     text-align: center !important;
+    transition: 1s;
 }
 
 button[kind="primary"] {
     width: 100%;
-    transition: 1s;
 }
 
 .stDownloadButton > button {
@@ -54,6 +54,7 @@ button:active {
 
 div[data-baseweb="popover"] {
     border-radius: 20px;
+    transition: 1s;
 }
 
 div[data-baseweb="popover"] > div {
