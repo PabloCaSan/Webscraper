@@ -30,6 +30,9 @@ section[data-testid="stFileUploadDropzone"] {
 
 button {
     border-radius: 20px !important;
+    background-color: #B72A4A;
+    color: #ffffff;
+    text-align: center;
 }
 
 div[data-baseweb="popover"] {
@@ -51,6 +54,10 @@ div[data-baseweb="popover"] > div > div > ul {
 .stNumberInput > div > div[data-baseweb="input"] {
     border-radius: 20px;
 }
+
+thead tr th:first-child {display:none}
+tbody th {display:none}
+
 
 </style>
 """
