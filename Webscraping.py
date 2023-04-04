@@ -134,7 +134,7 @@ def webscraping():
     for i in names_of_columns:
         iaItemListWithLink[i] = ''
 
-    for i in iaItemListWithLink.ItemUPC:
+    for i in iaItemListWithLink.index:
         try:
             # Funciones del scraping
             url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
@@ -193,6 +193,7 @@ if(file_type=='Excel'):
     if(uploaded_file is not None and excel_sheet!=''):
         try:
             iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
+            iaItemListWithLink.reset_index()
             st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping, si no es lo que esperabas, cambia el nombre de la hoja')
             st.table(iaItemListWithLink.astype('str').head(10))
         except:
