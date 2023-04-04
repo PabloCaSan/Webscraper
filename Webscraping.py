@@ -219,7 +219,7 @@ if(iaItemListWithLink is not None):
             st.subheader('Webscraping')
             webscraping()
             st.subheader('Resultados')
-            st.table(iaItemListWithLink)
+            st.table(iaItemListWithLink.head(10))
             csv_file = convert_df_2_csv(iaItemListWithLink)
             excel_file = convert_df_2_excel(iaItemListWithLink)
             col1, col2, col3 = st.columns([1,1,1])
