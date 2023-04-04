@@ -155,6 +155,7 @@ def webscraping():
                 try:
                     results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
+                    st.write(i)
                     st.write(results)
                     results[i].append('')
                 iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
