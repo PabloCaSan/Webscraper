@@ -17,6 +17,12 @@ import time
 import re
 from io import BytesIO
 
+file_extensions = ['CSV', 'Excel']
+iaItemListWithLink = None
+names_of_columns = []
+xpath_of_columns = []
+results = [[]]
+
 streamlit_style = """
 <style>
 
@@ -160,12 +166,6 @@ def webscraping():
     st.write('\n')
     st.success('¡Webscraping terminado!')
     st.write('\n')
-
-file_extensions = ['CSV', 'Excel']
-iaItemListWithLink = None
-names_of_columns = []
-xpath_of_columns = []
-results = [[]]
 
 st.title('Webscraping fácil')
 st.write('Solo necesitas un archivo Excel o CSV con una columna de enlaces y una columna de SKU, UPC o simplemente índices (una columns con valores distintos)')
