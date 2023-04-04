@@ -137,7 +137,7 @@ def webscraping():
     for i in iaItemListWithLink.index:
         try:
             # Funciones del scraping
-            url = iaItemListWithLink['Links'][iaItemListWithLink['ItemUPC']==i].values[0]
+            url = iaItemListWithLink['Links'][iaItemListWithLink['index']==i].values[0]
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'}
             response = requests.get(url, headers=headers) #timeout=None
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -148,7 +148,7 @@ def webscraping():
                     results[i].append(lxml_soup.xpath(xpath_of_columns[j])[0])
                 except:
                     results[i].append('')
-                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['index']==i] = results[i][j]
         except:
             for j in range(0,number_of_columns):
                 results.append([])
@@ -158,7 +158,7 @@ def webscraping():
                     st.write(i)
                     st.write(results)
                     results[i].append('')
-                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['ItemUPC']==i] = results[i][j]
+                iaItemListWithLink[names_of_columns[j]][iaItemListWithLink['index']==i] = results[i][j]
         # Funciones del contador
         time_of_exec = round(time.time(),0) - round(start_time,0)
         remaining_time = ((longitud-contador)*time_of_exec)/contador
@@ -200,10 +200,12 @@ if(file_type=='Excel'):
             st.error('¡Error! ¿cargaste un archivo excel?')
 
 if(iaItemListWithLink is not None):
-    column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
+    #column_of_code = st.text_input(label='Escribe el nombre de la columna que contiene SKU ó UPC', value='')
     column_of_link = st.text_input(label='Escribe el nombre de la columna que contiene los enlaces', value='')
-    if(column_of_code != '' and column_of_link!=''):
-        iaItemListWithLink = iaItemListWithLink.rename(columns={column_of_code:'ItemUPC', column_of_link:'Links'})
+    #if(column_of_code != '' and column_of_link!=''):
+    if(column_of_link!=''):
+        #iaItemListWithLink = iaItemListWithLink.rename(columns={column_of_code:'ItemUPC', column_of_link:'Links'})
+        iaItemListWithLink = iaItemListWithLink.rename(columns={column_of_link:'Links'})
         number_of_columns = st.number_input('¿Cuántos datos quieres obtener?', value=1, step=1)
         for i in range(0,number_of_columns):
             names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value=''))
