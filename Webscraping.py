@@ -192,7 +192,7 @@ if(file_type=='Excel'):
         try:
             iaItemListWithLink = pd.read_excel(uploaded_file, sheet_name=excel_sheet)
             st.write('Este es el archivo del que se obtendrán los enlaces para el webscraping, si no es lo que esperabas, cambia el nombre de la hoja')
-            st.table(iaItemListWithLink.astype('str'))
+            st.table(iaItemListWithLink.astype('str').head(10))
         except:
             st.error('¡Error! ¿cargaste un archivo excel?')
 
