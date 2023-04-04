@@ -117,11 +117,11 @@ def preview(url_preview):
         soup = BeautifulSoup(response.content, 'html.parser')
         lxml_soup = etree.HTML(str(soup))
         for j in range(0,number_of_columns):
-            st.write('Columna ', j, ': ', names_of_columns[j])
-            st.write('Resultado ', j, ': ', lxml_soup.xpath(xpath_of_columns[j])[0])
+            st.write(f'Columna  {j}: {names_of_columns[j]} \n Resultado {j}: {lxml_soup.xpath(xpath_of_columns[j])[0]}')
+            st.write()
     except:
         for j in range(0,number_of_columns):
-            st.write('Resultado ', j, ': ¡Error!')
+            st.write(f'Columna {j}: {names_of_columns[j]} \n Resultado {j}: ¡Error!')
 
 def webscraping():
     my_bar = st.progress(0)
