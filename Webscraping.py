@@ -211,6 +211,7 @@ if(iaItemListWithLink is not None):
             names_of_columns.append(st.text_input(label='Escribe el nombre de la columna '+str(i+1), value=''))
         for i in range(0,number_of_columns):
             xpath_of_columns.append(st.text_input(label='Escribe el xpath de la columna '+str(i+1), value=''))
+        st.write('Si el xpath contiene un @id con un sufijo alfanumérico (i.e. [@id="id_producto_123abc456"]), es probable que éste cambie para cada producto, por lo deberás reemplazarlo así: [@id="id_producto_123abc456"] => [contains(@id,"id_producto")]')
         if(xpath_of_columns[number_of_columns-1] is not None):
             st.subheader('Vista previa')
             st.write('Estos son los resultados que obtendrás, revisa y corrige en xpath en caso de ser necesario')
